@@ -28,8 +28,8 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && apt-get install yarn
 
-COPY .docker/config/composer.json /root/.composer/
-COPY .docker/config/composer.lock /root/.composer/
+COPY config/composer.json /root/.composer/
+COPY config/composer.lock /root/.composer/
 
 RUN cd /root/.composer/ && php /usr/local/bin/composer install --no-interaction --no-progress && \
     php /usr/local/bin/composer clearcache
@@ -45,8 +45,8 @@ RUN yes | pecl install xdebug \
 RUN mkdir -p /var/www/vhosts/app
 
 # Configure Apache and PHP
-COPY .docker/config/apache/vhost.conf /etc/apache2/sites-enabled/000-default.conf
-COPY .docker/config/php/50-custom.ini /usr/local/etc/php/conf.d/
+COPY config/apache/vhost.conf /etc/apache2/sites-enabled/000-default.conf
+COPY config/php/50-custom.ini /usr/local/etc/php/conf.d/
 
 # Clean up
 RUN rm -rf /tmp/*

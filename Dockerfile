@@ -4,7 +4,8 @@ MAINTAINER Giulio Troccoli-Allard
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y git libpng-dev zlib1g-dev libzip-dev libssl-dev libffi-dev openssh-client \
- python-dev python-setuptools zip unzip gnupg2 vpnc libxml2-dev
+ python-dev python-setuptools zip unzip gnupg2 vpnc libxml2-dev \
+ libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
 # Enable rewrite mod for Apache
 RUN a2enmod rewrite

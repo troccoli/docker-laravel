@@ -1,4 +1,4 @@
-FROM php:7.4.1-apache
+FROM php:7.4.6-apache
 
 MAINTAINER Giulio Troccoli-Allard
 
@@ -16,8 +16,8 @@ RUN a2enmod rewrite
 # - pdo_mysql: required by PDO to connect to a MySQL database
 RUN docker-php-ext-install gd zip pdo_mysql calendar bcmath soap
 
-# Install NodeJS 8.x
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs
+# Install NodeJS 14.x
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
 
 # Install Composer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php && \

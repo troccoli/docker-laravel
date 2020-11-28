@@ -1,9 +1,9 @@
-FROM php:7.4.10-apache
+FROM php:7.4.12-apache
 
 MAINTAINER Giulio Troccoli-Allard
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y git libpng-dev zlib1g-dev libzip-dev libssl-dev libffi-dev openssh-client \
+RUN apt-get update && apt-get install -y vim git libpng-dev zlib1g-dev libzip-dev libssl-dev libffi-dev openssh-client \
  python-dev python-setuptools zip unzip gnupg2 vpnc libxml2-dev \
  libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
@@ -14,13 +14,14 @@ RUN a2enmod rewrite
 # - gd: required by the intervention image library
 # - zip: required so Composer can use packages from dist
 # - pdo_mysql: required by PDO to connect to a MySQL database
-RUN docker-php-ext-install gd zip pdo_mysql calendar bcmath soap
+RUN docker-php-ext-install gd zip pdo_mysql calendar bcmath soap intl
 
 # Install NodeJS 14.x
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
 
 # Install Composer
-RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php && \
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
     php composer-setup.php && php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer
 

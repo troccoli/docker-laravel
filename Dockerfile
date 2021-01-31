@@ -1,4 +1,4 @@
-FROM php:7.4.12-apache
+FROM php:7.4.14-apache
 
 MAINTAINER Giulio Troccoli-Allard
 

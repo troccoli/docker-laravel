@@ -3,7 +3,7 @@ FROM php:7.4.12-apache
 MAINTAINER Giulio Troccoli-Allard
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y vim git libpng-dev zlib1g-dev libzip-dev libssl-dev libffi-dev openssh-client \
+RUN apt-get update && apt-get install -y vim git libjpeg-dev libpng-dev libzip-dev libssl-dev libffi-dev openssh-client \
  python-dev python-setuptools zip unzip gnupg2 vpnc libxml2-dev \
  libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
@@ -14,6 +14,7 @@ RUN a2enmod rewrite
 # - gd: required by the intervention image library
 # - zip: required so Composer can use packages from dist
 # - pdo_mysql: required by PDO to connect to a MySQL database
+RUN docker-php-ext-configure gd --enable-gd --with-jpeg
 RUN docker-php-ext-install gd zip pdo_mysql calendar bcmath soap intl
 
 # Install NodeJS 14.x
